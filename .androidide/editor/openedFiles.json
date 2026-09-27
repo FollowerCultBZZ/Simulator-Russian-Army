@@ -1,0 +1,20 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/Simulator-Russian-Army/core/src/main/java/com/example/game/core/DialogueData.java",
+      "selection": {
+        "end": {
+          "column": 5,
+          "index": 406,
+          "line": 15
+        },
+        "start": {
+          "column": 5,
+          "index": 406,
+          "line": 15
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Simulator-Russian-Army/core/src/main/java/com/example/game/core/DialogueData.java"
+}

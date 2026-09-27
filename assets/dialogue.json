@@ -1,0 +1,93 @@
+{
+  "player": {
+    "intellect": 3,
+    "strength": 6,
+    "karma": 0
+  },
+
+  "nodes": {
+
+    "start": {
+      "text": "Здравия желаю, товарищ рядовой.",
+      "background": "background.png",
+      "choices": [
+        {
+          "text": "Доложить по форме",
+          "next": "report",
+          "effects": { "karma": 1 }
+        },
+        {
+          "text": "Промолчать",
+          "next": "silence",
+          "effects": { "karma": -1 }
+        },
+        {
+          "text": "Спросить про интеллект",
+          "next": "smart",
+          "requires": { "intellect": 5 }
+        }
+      ]
+    },
+
+    "report": {
+      "text": "Правильно. Свободен.",
+      "background": "background.png",
+      "choices": [
+        {
+          "text": "Пойти в лес",
+          "outcomes": [
+            { "weight": 70, "next": "forest_good" },
+            { "weight": 30, "next": "forest_bad" }
+          ]
+        },
+        { "text": "Конец службы", "action": "exit" }
+      ]
+    },
+
+    "silence": {
+      "text": "Молчание — знак согласия? Или трусости?",
+      "background": "background.png",
+      "choices": [
+        {
+          "text": "Начать бой",
+          "outcomes": [
+            { "weight": 20, "next": "fight_win", "requires": { "strength": 8 } },
+            { "weight": 80, "next": "fight_lose" }
+          ]
+        }
+      ]
+    },
+
+    "smart": {
+      "text": "Интеллект — это хорошо. Но армия любит силу.",
+      "background": "background.png",
+      "choices": [
+        { "text": "Понял", "next": "start" }
+      ]
+    },
+
+    "forest_good": {
+      "text": "Ты выбрался. Повезло.",
+      "background": "background.png",
+      "choices": [ { "text": "Дальше", "next": "start" } ]
+    },
+
+    "forest_bad": {
+      "text": "Ты сломал ногу. Конец.",
+      "background": "background.png",
+      "choices": [ { "text": "Конец", "action": "exit" } ]
+    },
+
+    "fight_win": {
+      "text": "Ты победил. Сила решает.",
+      "background": "background.png",
+      "choices": [ { "text": "Дальше", "next": "start" } ]
+    },
+
+    "fight_lose": {
+      "text": "Ты проиграл.",
+      "background": "background.png",
+      "choices": [ { "text": "Конец", "action": "exit" } ]
+    }
+  }
+}
