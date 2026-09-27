@@ -10,6 +10,8 @@ This is a template [LibGDX](libgdx.com) project that you can use to make games a
 
 Building: `Open AndroidIDE -> Open Existing Project -> Wait until build finishes -> Build Tasks - AssembleDebug`. After that the IDE will generate debug APK located in `project_root/app/build/output/debug`
 
+> Test change: documentation is kept up to date through the pull-request workflow.
+
 # License
 ```
 This template project is made to help people start their app development wuth LibGDX and AndroidIDE, 
