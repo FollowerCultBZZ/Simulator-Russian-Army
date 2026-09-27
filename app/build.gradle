@@ -46,7 +46,7 @@ android {
 	buildTypes {
 		release {
 			minifyEnabled false
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
 		}
 	}
 
@@ -68,15 +68,11 @@ dependencies {
 	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
 	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
 	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-    dependencies {
-    // ... существующие строки (core, gdx-backend-android, gdx-platform natives и т.д.)
 
-    // === Добавить это для gdx-freetype ===
     natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
     natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
     natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
     natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
-}
 
 }
 
@@ -134,7 +130,7 @@ task run(type: Exec) {
 	}
 
 	def adb = path + "/platform-tools/adb"
-	commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.example.packagename/com.example.packagename.AndroidLauncher'
+	commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.example.packagename/com.example.game.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
