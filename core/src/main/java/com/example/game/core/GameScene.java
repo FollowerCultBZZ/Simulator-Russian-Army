@@ -14,12 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.example.game.world.Player;
 
 public final class GameScene extends Stage {
 
     public interface NodeListener {
         void onNodeShown(DialogueNode node);
+    }
+
+    public interface ChoiceListener {
+        void onChoiceSelected(DialogueNode.Choice choice);
     }
 
     public static final float VW = 1080f;
@@ -34,8 +37,6 @@ public final class GameScene extends Stage {
     private static final String DEFAULT_BACKGROUND = "background.png";
 
     private final Skin skin;
-    private final Player player;
-    private final DialogueManager dialogue;
 
     private final Image backgroundImage;
     private final Label dialogLabel;
@@ -45,24 +46,15 @@ public final class GameScene extends Stage {
     private Texture backgroundTexture;
     private String currentBackgroundPath;
     private NodeListener nodeListener;
+    private ChoiceListener choiceListener;
 
-    public GameScene(Skin skin, Player player, DialogueManager dialogue) {
+    public GameScene(Skin skin) {
         super(new ExtendViewport(VW, VH));
 
         if (skin == null) {
             throw new IllegalArgumentException("Skin cannot be null");
         }
-        if (player == null) {
-            throw new IllegalArgumentException("Player cannot be null");
-        }
-        if (dialogue == null) {
-            throw new IllegalArgumentException("DialogueManager cannot be null");
-        }
-
         this.skin = skin;
-        this.player = player;
-        this.dialogue = dialogue;
-
         backgroundImage = new Image();
         backgroundImage.setFillParent(true);
         backgroundImage.setScaling(Scaling.fill);
@@ -99,9 +91,14 @@ public final class GameScene extends Stage {
         this.nodeListener = listener;
     }
 
-    public void showNode(DialogueNode node) {
-        if (node == null) {
-            throw new IllegalArgumentException("Node cannot be null");
+    public void setChoiceListener(ChoiceListener listener) {
+        this.choiceListener = listener;
+    }
+
+    public void showNode(DialogueNode node, Iterable<DialogueNode.Choice> choices) {
+
+        if (node == null || choices == null) {
+            throw new IllegalArgumentException("Node and choices cannot be null");
         }
 
         if (node.background != null) {
@@ -113,18 +110,14 @@ public final class GameScene extends Stage {
 
         boolean anyVisible = false;
 
-        for (final DialogueNode.Choice choice : node.choices) {
-            if (!player.meets(choice.requires)) {
-                continue;
-            }
-
+        for (final DialogueNode.Choice choice : choices) {
             anyVisible = true;
 
             TextButton button = new TextButton(choice.text, skin);
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    onChoiceSelected(choice);
+                    notifyChoiceSelected(choice);
                 }
             });
 
@@ -147,30 +140,10 @@ public final class GameScene extends Stage {
         }
     }
 
-    private void onChoiceSelected(DialogueNode.Choice choice) {
-        if (choice == null) {
-            return;
+    private void notifyChoiceSelected(DialogueNode.Choice choice) {
+        if (choiceListener != null) {
+            choiceListener.onChoiceSelected(choice);
         }
-
-        player.apply(choice.effects);
-
-        String nextId = dialogue.resolveNext(choice);
-
-        if (nextId != null) {
-            DialogueNode next = dialogue.get(nextId);
-            if (next == null) {
-                throw new IllegalStateException("Missing dialogue node: " + nextId);
-            }
-            showNode(next);
-            return;
-        }
-
-        if ("exit".equals(choice.action)) {
-            Gdx.app.exit();
-            return;
-        }
-
-        throw new IllegalStateException("Choice has no next node or supported action");
     }
 
     public void setBackground(String path) {
