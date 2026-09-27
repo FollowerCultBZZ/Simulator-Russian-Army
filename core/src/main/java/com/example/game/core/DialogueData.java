@@ -27,5 +27,6 @@ public class DialogueData {
     public static class OutcomeData {
         public int weight = 1;
         public String next;
+        public ObjectMap<String, Integer> requires;
     }
 }

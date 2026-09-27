@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.example.game.core.DialogueManager;
 import com.example.game.core.DialogueNode;
+import com.example.game.core.DialogueSession;
 import com.example.game.core.GameScene;
 import com.example.game.core.MusicManager;
-import com.example.game.world.Player;
 import com.example.game.utils.Core;
 
 public final class TestScreen extends ScreenAdapter {
@@ -20,7 +20,7 @@ public final class TestScreen extends ScreenAdapter {
     private Skin skin;
     private GameScene scene;
     private DialogueManager dialogue;
-    private Player player;
+    private DialogueSession session;
     private MusicManager musicManager;
 
     @Override
@@ -34,10 +34,8 @@ public final class TestScreen extends ScreenAdapter {
             skin = Core.skin;
             dialogue = new DialogueManager(DIALOGUE_PATH);
 
-            player = new Player();
-            dialogue.applyInitialStats(player);
-
-            scene = new GameScene(skin, player, dialogue);
+            session = new DialogueSession(dialogue);
+            scene = new GameScene(skin);
 
             musicManager = new MusicManager();
             musicManager.setVolume(MUSIC_VOLUME);
@@ -48,20 +46,33 @@ public final class TestScreen extends ScreenAdapter {
                     applyMusic(node);
                 }
             });
+            scene.setChoiceListener(new GameScene.ChoiceListener() {
+                @Override
+                public void onChoiceSelected(DialogueNode.Choice choice) {
+                    showSelectedChoice(choice);
+                }
+            });
 
             Gdx.input.setInputProcessor(scene);
-
-            DialogueNode start = dialogue.getStart();
-            if (start == null) {
-                throw new IllegalStateException("Start node is missing");
-            }
-
-            scene.showNode(start);
+            showNode(session.start());
         } catch (RuntimeException exception) {
             Gdx.app.error("TestScreen", "Failed to initialize screen", exception);
             dispose();
             throw exception;
         }
+    }
+
+    private void showSelectedChoice(DialogueNode.Choice choice) {
+        DialogueNode next = session.select(choice);
+        if (next == null) {
+            Gdx.app.exit();
+            return;
+        }
+        showNode(next);
+    }
+
+    private void showNode(DialogueNode node) {
+        scene.showNode(node, session.getAvailableChoices());
     }
 
     private void applyMusic(DialogueNode node) {
@@ -120,6 +131,6 @@ public final class TestScreen extends ScreenAdapter {
         skin = null;
 
         dialogue = null;
-        player = null;
+        session = null;
     }
 }
