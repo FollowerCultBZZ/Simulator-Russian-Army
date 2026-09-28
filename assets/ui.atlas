@@ -6,50 +6,64 @@ filter: Nearest, Nearest
 repeat: none
 arrow-left
   rotate: false
-  xy: 2, 20
+  xy: 2, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 arrow-right
   rotate: false
-  xy: 68, 20
+  xy: 68, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 button-down
   rotate: false
-  xy: 134, 20
+  xy: 134, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 button-up
   rotate: false
-  xy: 200, 20
+  xy: 200, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+cursor
+  rotate: false
+  xy: 68, 20
+  size: 8, 16
+  orig: 8, 16
+  offset: 0, 0
+  index: -1
 dialog
   rotate: false
-  xy: 266, 20
+  xy: 266, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 loading-bar
   rotate: false
-  xy: 2, 2
+  xy: 2, 20
   size: 64, 16
   orig: 64, 16
   offset: 0, 0
   index: -1
 loading-bar-cell
   rotate: false
-  xy: 332, 68
+  xy: 2, 2
   size: 16, 16
   orig: 16, 16
+  offset: 0, 0
+  index: -1
+textfield-bg
+  rotate: false
+  xy: 332, 86
+  size: 64, 16
+  orig: 64, 16
   offset: 0, 0
   index: -1
