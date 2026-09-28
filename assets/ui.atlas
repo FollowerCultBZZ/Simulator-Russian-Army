@@ -1,27 +1,55 @@
 
 ui.png
-size: 256, 64
+size: 512, 128
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+arrow-left
+  rotate: false
+  xy: 2, 20
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+arrow-right
+  rotate: false
+  xy: 68, 20
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 button-down
   rotate: false
-  xy: 2, 2
-  size: 64, 48
-  orig: 64, 48
+  xy: 134, 20
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 button-up
   rotate: false
-  xy: 68, 2
-  size: 64, 48
-  orig: 64, 48
+  xy: 200, 20
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 dialog
   rotate: false
-  xy: 134, 2
-  size: 48, 48
-  orig: 48, 48
+  xy: 266, 20
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+loading-bar
+  rotate: false
+  xy: 2, 2
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+loading-bar-cell
+  rotate: false
+  xy: 332, 68
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
